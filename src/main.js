@@ -2,6 +2,19 @@ import TwitchChat from "twitch-chat-emotes-threejs";
 import * as THREE from "three";
 import Stats from "stats-js";
 import "./main.css";
+import './scene'
+
+window.shaderPID = 100000;
+
+export const palette = {
+	fog: new THREE.Color("#E7ECEF"),
+	grass: new THREE.Color("#5B8266"),
+	water: new THREE.Color("#99CAFF"),
+	stone: new THREE.Color("#505168"),
+	black: new THREE.Color("#272932"),
+};
+
+export const farDistance = 100;
 
 /*
 ** connect to twitch chat
@@ -50,12 +63,14 @@ const camera = new THREE.PerspectiveCamera(
 	70,
 	window.innerWidth / window.innerHeight,
 	0.1,
-	1000
+	farDistance,
 );
-camera.position.z = 5;
+camera.rotation.x = Math.PI * 0.1;
+camera.position.y = 5;
+camera.position.z = farDistance / 2;
 
-const scene = new THREE.Scene();
-const renderer = new THREE.WebGLRenderer({ antialias: false });
+export const scene = new THREE.Scene();
+export const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 function resize() {
