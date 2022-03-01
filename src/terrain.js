@@ -54,13 +54,13 @@ const mesh = new THREE.Mesh(geometry, groundMaterial);
 mesh.getNoise = getNoise;
 
 import waterMaterial from './materials/water';
-const waterWidth = 60;
-const waterSegments = 35;
+const waterWidth = 80;
+const waterSegments = 50;
 const waterGeometry = new THREE.PlaneGeometry(waterWidth, size, waterSegments, (size /waterWidth) * waterSegments);
 waterGeometry.rotateX(-Math.PI / 2);
 const water = new THREE.Mesh(waterGeometry, waterMaterial);
 water.position.y = -2.25;
-water.position.x = riverX;
+water.position.x = riverX * 1.2;
 mesh.add(water);
 
 export default mesh;

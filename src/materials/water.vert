@@ -1,1 +1,1 @@
-transformed.y += snoise(vec3(transformed.x * 2.0, u_time * 0.1, transformed.z * 2.0)) * 0.1;
+transformed.y += snoise(vec3(transformed.x * 2.0, u_time * 0.1, transformed.z * 2.0)) * 0.25;
