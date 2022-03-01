@@ -59,7 +59,7 @@ const ChatInstance = new TwitchChat({
 ** Initiate ThreejS scene
 */
 
-const camera = new THREE.PerspectiveCamera(
+export const camera = new THREE.PerspectiveCamera(
 	70,
 	window.innerWidth / window.innerHeight,
 	0.1,
@@ -83,6 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('resize', resize);
 	if (stats) document.body.appendChild(stats.dom);
 	document.body.appendChild(renderer.domElement);
+	resize();
 	draw();
 })
 

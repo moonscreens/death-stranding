@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { palette, farDistance, scene } from "./main";
+import { palette, farDistance, scene, renderer } from "./main";
 
 import terrain from "./terrain";
 
@@ -13,8 +13,20 @@ setTimeout(() => {
 
 	const light = new THREE.DirectionalLight(palette.white, 1);
 	light.color = light.color.clone().sub(palette.black);
-	light.position.set(0, 1, 0);
+	light.position.set(0, 1, -0.5);
 	scene.add(light);
 
 	scene.add(terrain);
+
+	const backPlane = new THREE.Mesh(
+		new THREE.PlaneBufferGeometry(farDistance * 2, farDistance * 2),
+		new THREE.MeshBasicMaterial({
+			color: palette.fog,
+		})
+	);
+	backPlane.position.z = -farDistance;
+	scene.add(backPlane);
+
+	const generator = new THREE.PMREMGenerator(renderer);
+	scene.environment = generator.fromScene(scene).texture;
 }, 0)

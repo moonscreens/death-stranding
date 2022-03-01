@@ -54,13 +54,24 @@ const mesh = new THREE.Mesh(geometry, groundMaterial);
 mesh.getNoise = getNoise;
 
 import waterMaterial from './materials/water';
-const waterWidth = 80;
+const waterWidth = 70;
 const waterSegments = 50;
-const waterGeometry = new THREE.PlaneGeometry(waterWidth, size, waterSegments, (size /waterWidth) * waterSegments);
+const waterGeometry = new THREE.PlaneGeometry(waterWidth, size, waterSegments, (size / waterWidth) * waterSegments);
 waterGeometry.rotateX(-Math.PI / 2);
-const water = new THREE.Mesh(waterGeometry, waterMaterial);
+const water = new THREE.Mesh(waterGeometry, waterMaterial({
+	color: 0x79AFE5,
+	flatShading: true,
+	specular: 0xFFFFFF,
+	shininess: 70,
+	transparent: true,
+	opacity: 0.75,
+}));
 water.position.y = -2.25;
-water.position.x = riverX * 1.2;
+water.position.x = riverX * 1.5;
 mesh.add(water);
+
+water.customDepthMaterial = waterMaterial({
+	depthPacking: THREE.RGBADepthPacking,
+}, true);
 
 export default mesh;

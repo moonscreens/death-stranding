@@ -17,7 +17,6 @@ let uniforms = null;
 
 const material = new THREE.MeshLambertMaterial({
 	color: 0x505168,
-	flatShading: true,
 	side: THREE.FrontSide,
 });
 material.needsUpdate = true;
