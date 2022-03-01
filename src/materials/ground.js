@@ -32,6 +32,7 @@ material.onBeforeCompile = function (shader) {
 		'void main()',
 		`
 			varying vec4 vWorldPosition;
+			varying vec3 vViewPosition;
 			varying vec3 vNormal;
 			void main()
 		`);
@@ -40,6 +41,8 @@ material.onBeforeCompile = function (shader) {
 		`
 			#include <begin_vertex>
 			vWorldPosition = modelMatrix * vec4(position, 1.0);
+
+			vViewPosition = -(modelViewMatrix * vec4( position, 1.0 )).xyz;
 			vNormal = normal;
 		`);
 
@@ -49,6 +52,7 @@ material.onBeforeCompile = function (shader) {
 
 	shader.fragmentShader = `
 	varying vec4 vWorldPosition;
+	varying vec3 vViewPosition;
 	varying vec3 vNormal;
 	uniform float u_time;
 	${shader.fragmentShader.replace('#include <map_fragment>', `

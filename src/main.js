@@ -14,7 +14,7 @@ export const palette = {
 	black: new THREE.Color("#272932"),
 };
 
-export const farDistance = 100;
+export const farDistance = 120;
 
 /*
 ** connect to twitch chat

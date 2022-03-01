@@ -4,7 +4,7 @@ import * as THREE from 'three';
 const constantNoise = new SimplexNoise('abd');
 const simplex = new SimplexNoise();
 const size = 200;
-const segments = Math.round(25);
+const segments = 40;
 const geometry = new THREE.PlaneGeometry(size, size, segments, segments);
 
 geometry.rotateX(-Math.PI / 2);
@@ -13,7 +13,7 @@ const getNoise = (x, y) => {
 	return (
 		constantNoise.noise2D(x * 0.005, y * 0.005) * Math.max(0, Math.min(100, -y + 3))
 		+
-		simplex.noise2D(x * 0.1, y * 0.1) * 1.5
+		simplex.noise2D(x * 0.1, y * 0.1) * 0.5
 		+
 		simplex.noise2D(x * 0.01, y * 0.01) * 1
 	);
@@ -27,7 +27,6 @@ for (let i = 0; i < vertices.count; i++) {
 	vertices.setXYZ(i, vertex.x, vertex.y, vertex.z);
 }
 
-geometry.computeTangents();
 geometry.computeVertexNormals();
 geometry.normalizeNormals();
 
