@@ -22,7 +22,7 @@ for (let index = -strandCount/2; index < strandCount/2; index++) {
 	const mesh = new THREE.Mesh(geometry, mat);
 	mesh.position.x = index * 15;
 	mesh.position.y = 4 + Math.random() * 50;
-	mesh.position.z = (Math.random() - 0.5) * 50;
+	mesh.position.z = (Math.pow(Math.random(), 3) - 0.5) * 50;
 
 	group.add(mesh);
 }
