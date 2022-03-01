@@ -34,4 +34,8 @@ import groundMaterial from './materials/ground';
 const mesh = new THREE.Mesh(geometry, groundMaterial);
 mesh.getNoise = getNoise;
 
+setInterval(() => {
+	mesh.rotation.y += 0.01;
+}, 16);
+
 export default mesh;
