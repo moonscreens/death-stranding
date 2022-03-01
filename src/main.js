@@ -70,7 +70,7 @@ camera.position.y = 5;
 camera.position.z = farDistance / 2;
 
 export const scene = new THREE.Scene();
-export const renderer = new THREE.WebGLRenderer({ antialias: false });
+export const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 function resize() {
