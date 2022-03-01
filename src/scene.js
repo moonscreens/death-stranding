@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import { palette, farDistance, scene, renderer } from "./main";
 
-import terrain from "./terrain";
+import terrain from "./stuff/terrain";
+import strands from "./stuff/strands";
 
 setTimeout(() => {
 	scene.background = palette.fog;
@@ -17,6 +18,7 @@ setTimeout(() => {
 	scene.add(light);
 
 	scene.add(terrain);
+	scene.add(strands);
 
 	const backPlane = new THREE.Mesh(
 		new THREE.PlaneBufferGeometry(farDistance * 2, farDistance * 2),

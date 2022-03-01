@@ -49,11 +49,11 @@ for (let i = 0; i < vertices.count; i++) {
 geometry.computeVertexNormals();
 geometry.normalizeNormals();
 
-import groundMaterial from './materials/ground';
+import groundMaterial from '../materials/ground';
 const mesh = new THREE.Mesh(geometry, groundMaterial);
 mesh.getNoise = getNoise;
 
-import waterMaterial from './materials/water';
+import waterMaterial from '../materials/water';
 const waterWidth = 70;
 const waterSegments = 50;
 const waterGeometry = new THREE.PlaneGeometry(waterWidth, size, waterSegments, (size / waterWidth) * waterSegments);
