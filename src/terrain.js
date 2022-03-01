@@ -13,7 +13,7 @@ const getNoise = (x, y) => {
 	return (
 		constantNoise.noise2D(x * 0.005, y * 0.005) * Math.max(0, Math.min(100, -y + 3))
 		+
-		simplex.noise2D(x * 0.1, y * 0.1) * 0.5
+		simplex.noise2D(x * 0.1, y * 0.1) * 2 * (simplex.noise2D(x * 0.02, y * 0.02) * 0.5 + 0.5)
 		+
 		simplex.noise2D(x * 0.01, y * 0.01) * 1
 	);
