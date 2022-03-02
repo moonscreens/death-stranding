@@ -1,18 +1,14 @@
 import TwitchChat from "twitch-chat-emotes-threejs";
 import * as THREE from "three";
 import Stats from "stats-js";
+
+import { palette } from "./palette";
+
 import "./main.css";
 import './scene'
 
 window.shaderPID = 100000;
 
-export const palette = {
-	fog: new THREE.Color("#E7ECEF"),
-	grass: new THREE.Color("#5B8266"),
-	water: new THREE.Color("#99CAFF"),
-	stone: new THREE.Color("#505168"),
-	black: new THREE.Color("#272932"),
-};
 
 export const farDistance = 120;
 

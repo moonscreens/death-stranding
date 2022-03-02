@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { palette } from '../main';
+import { palette } from '../palette';
 
 import frag from './ground.frag';
 

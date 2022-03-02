@@ -1,5 +1,6 @@
 import SimplexNoise from 'simplex-noise';
 import * as THREE from 'three';
+import { palette } from '../palette';
 
 const constantNoise = new SimplexNoise('abd');
 const simplex = new SimplexNoise();
@@ -59,7 +60,7 @@ const waterSegments = 50;
 const waterGeometry = new THREE.PlaneGeometry(waterWidth, size, waterSegments, (size / waterWidth) * waterSegments);
 waterGeometry.rotateX(-Math.PI / 2);
 const water = new THREE.Mesh(waterGeometry, waterMaterial({
-	color: 0x79AFE5,
+	color: palette.water,
 	flatShading: true,
 	specular: 0xFFFFFF,
 	shininess: 70,

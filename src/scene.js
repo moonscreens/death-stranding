@@ -1,5 +1,7 @@
 import * as THREE from "three";
-import { palette, farDistance, scene, renderer } from "./main";
+import { farDistance, scene, renderer } from "./main";
+
+import { palette } from "./palette";
 
 import terrain from "./stuff/terrain";
 import strands from "./stuff/strands";
