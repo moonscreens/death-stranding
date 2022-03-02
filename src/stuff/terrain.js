@@ -15,7 +15,7 @@ const difference = (a, b) => {
 }
 
 const riverX = 20;
-const riverDeep = 0.3;
+const riverDeep = 0.35;
 const riverWidth = 15;
 const getNoise = (x, y) => {
 	let riverDip = difference(x, riverX + Math.sin(y / riverWidth + 1) * riverWidth);
