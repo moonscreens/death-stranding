@@ -116,7 +116,7 @@ function draw() {
 const sceneEmoteArray = [];
 ChatInstance.listen((emotes) => {
 	const group = new THREE.Group();
-	group.lifespan = 5000;
+	group.lifespan = 30000;
 	group.timestamp = Date.now();
 
 	let i = 0;
@@ -127,23 +127,17 @@ ChatInstance.listen((emotes) => {
 		i++;
 	})
 
+	group.position.set(0, 10, -farDistance / 2);
+
 	// Set velocity to a random normalized value
 	group.velocity = new THREE.Vector3(
-		(Math.random() - 0.5) * 2,
-		(Math.random() - 0.5) * 2,
-		(Math.random() - 0.5) * 2
+		(Math.random() - 0.5),
+		(Math.random() - 0.5),
+		5,
 	);
-	group.velocity.normalize();
+	group.scale.setScalar(1);
 
 	group.update = () => { // called every frame
-		let progress = (Date.now() - group.timestamp) / group.lifespan;
-		if (progress < 0.25) { // grow to full size in first quarter
-			group.scale.setScalar(progress * 4);
-		} else if (progress > 0.75) { // shrink to nothing in last quarter
-			group.scale.setScalar((1 - progress) * 4);
-		} else { // maintain full size in middle
-			group.scale.setScalar(1);
-		}
 	}
 
 	scene.add(group);
