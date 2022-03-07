@@ -5,7 +5,7 @@ const group = new THREE.Group();
 import generateMaterial from '../materials/strand';
 const mat = generateMaterial();
 const strandHeight = 120;
-const geometry = new THREE.PlaneGeometry(0.5, strandHeight, 3, 128);
+const geometry = new THREE.PlaneGeometry(0.5, strandHeight, 3, 256);
 geometry.translate(0, strandHeight / 2, 0);
 
 const vertices = geometry.getAttribute('position');
@@ -26,12 +26,12 @@ for (let index = -strandCount / 2; index < strandCount / 2; index++) {
 
 	group.add(mesh);
 
-	const cloneCount = Math.floor(Math.random() * 2) + 1;
+	const cloneCount = Math.floor(Math.random() * 2) + 2;
 	for (let i = 0; i < cloneCount; i++) {
 
 		const clone = mesh.clone();
 		clone.position.x += 0.1;
-		clone.position.z -= 0.5 * i;
+		clone.position.z -= 0.1 * i;
 		group.add(clone);
 	}
 }

@@ -18,6 +18,7 @@ const generateMaterial = (options = {}, depthOnly = false) => {
 	const matToUse = depthOnly ? THREE.MeshDepthMaterial : THREE.MeshBasicMaterial;
 	const material = new matToUse({
 		color: 0x000000,
+		side: THREE.DoubleSide,
 		...options,
 	});
 	material.needsUpdate = true;
@@ -31,10 +32,10 @@ const generateMaterial = (options = {}, depthOnly = false) => {
 		shader.vertexShader = shader.vertexShader.replace(
 			'void main()',
 			`
-		uniform float u_time;
-		${snoise}
-		void main()
-		`);
+			uniform float u_time;
+			${snoise}
+			void main()
+			`);
 		shader.vertexShader = shader.vertexShader.replace(
 			'#include <begin_vertex>',
 			`
