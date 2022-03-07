@@ -1,10 +1,10 @@
-import * as THREE from "three";
-import TwitchChat from "twitch-chat-emotes-threejs";
-import Stats from "stats-js";
+import * as THREE from 'three';
+import TwitchChat from 'twitch-chat-emotes-threejs';
+import Stats from 'stats-js';
 
-import { scene, camera, renderer, farDistance, drawFunctions } from "./scene";
-import "./main.css";
-import './environment'
+import { scene, camera, renderer, farDistance, drawFunctions } from './scene';
+import './main.css';
+import './environment';
 
 window.shaderPID = 100000;
 
@@ -77,10 +77,10 @@ function draw() {
 	lastFrame = performance.now();
 
 
+	const d = Date.now();
 	for (let index = sceneEmoteArray.length - 1; index >= 0; index--) {
 		const element = sceneEmoteArray[index];
-		element.position.addScaledVector(element.velocity, delta);
-		if (element.position.z > camera.position.z) {
+		if (element.timestamp + element.lifetime < d) {
 			sceneEmoteArray.splice(index, 1);
 			scene.remove(element);
 		}
@@ -98,6 +98,7 @@ function rand(scale) {
 /*
 ** Handle Twitch Chat Emotes
 */
+import { getNoise } from './stuff/terrain';
 const sceneEmoteArray = [];
 ChatInstance.listen((emotes) => {
 	const group = new THREE.Group();
@@ -112,14 +113,8 @@ ChatInstance.listen((emotes) => {
 		i++;
 	})
 
-	group.position.set(0 + rand(10), 10 + rand(10), camera.position.z - farDistance);
-
-	// Set velocity to a random normalized value
-	group.velocity = new THREE.Vector3(
-		(Math.random() - 0.5),
-		(Math.random() - 0.5),
-		10,
-	);
+	group.position.set(rand(50), 0, rand(30) + camera.position.z / 2);
+	group.position.y = getNoise(group.position.x, group.position.z) + 0.5;
 	group.scale.setScalar(1);
 
 	scene.add(group);
