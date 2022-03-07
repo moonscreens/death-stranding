@@ -1,16 +1,12 @@
-import TwitchChat from "twitch-chat-emotes-threejs";
 import * as THREE from "three";
+import TwitchChat from "twitch-chat-emotes-threejs";
 import Stats from "stats-js";
 
-import { palette } from "./palette";
-
+import { scene, camera, renderer, farDistance, drawFunctions } from "./scene";
 import "./main.css";
-import './scene'
+import './environment'
 
 window.shaderPID = 100000;
-
-
-export const farDistance = 120;
 
 /*
 ** connect to twitch chat
@@ -54,19 +50,6 @@ const ChatInstance = new TwitchChat({
 /*
 ** Initiate ThreejS scene
 */
-
-export const camera = new THREE.PerspectiveCamera(
-	70,
-	window.innerWidth / window.innerHeight,
-	0.1,
-	farDistance,
-);
-camera.rotation.x = Math.PI * 0.1;
-camera.position.y = 5;
-camera.position.z = farDistance / 2;
-
-export const scene = new THREE.Scene();
-export const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 function resize() {
@@ -97,11 +80,9 @@ function draw() {
 	for (let index = sceneEmoteArray.length - 1; index >= 0; index--) {
 		const element = sceneEmoteArray[index];
 		element.position.addScaledVector(element.velocity, delta);
-		if (element.timestamp + element.lifespan < Date.now()) {
+		if (element.position.z > camera.position.z) {
 			sceneEmoteArray.splice(index, 1);
 			scene.remove(element);
-		} else {
-			element.update();
 		}
 	}
 
@@ -109,6 +90,10 @@ function draw() {
 	if (stats) stats.end();
 };
 
+
+function rand(scale) {
+	return (Math.random() - 0.5) * scale * 2;
+}
 
 /*
 ** Handle Twitch Chat Emotes
@@ -127,18 +112,15 @@ ChatInstance.listen((emotes) => {
 		i++;
 	})
 
-	group.position.set(0, 10, -farDistance / 2);
+	group.position.set(0 + rand(10), 10 + rand(10), camera.position.z - farDistance);
 
 	// Set velocity to a random normalized value
 	group.velocity = new THREE.Vector3(
 		(Math.random() - 0.5),
 		(Math.random() - 0.5),
-		5,
+		10,
 	);
 	group.scale.setScalar(1);
-
-	group.update = () => { // called every frame
-	}
 
 	scene.add(group);
 	sceneEmoteArray.push(group);
