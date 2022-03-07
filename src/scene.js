@@ -9,7 +9,7 @@ import strands from "./stuff/strands";
 setTimeout(() => {
 	scene.background = palette.fog;
 
-	scene.fog = new THREE.Fog(palette.fog, 0, farDistance);
+	scene.fog = new THREE.Fog(palette.fog, -farDistance * 0.1, farDistance);
 	//scene.fog = new THREE.FogExp2(palette.fog, 0.025);
 
 	scene.add(new THREE.AmbientLight(palette.black));
