@@ -13,7 +13,7 @@ window.shaderPID = 100000;
 */
 
 // a default array of twitch channels to join
-let channels = ['moonmoon'];
+let channels = ['antimattertape'];
 
 // the following few lines of code will allow you to add ?channels=channel1,channel2,channel3 to the URL in order to override the default array of channels
 const query_vars = {};
