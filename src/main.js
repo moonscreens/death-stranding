@@ -84,14 +84,24 @@ function draw() {
 	const d = Date.now();
 	for (let index = sceneEmoteArray.length - 1; index >= 0; index--) {
 		const element = sceneEmoteArray[index];
-		if (element.timestamp + element.lifespan < d) {
+		const p = (d - element.timestamp) / element.lifespan;
+		if (p > 1) {
 			element.dead = true;
 			sceneEmoteArray.splice(index, 1);
 			scene.remove(element);
-		} else if (!element.idle) {
-			element.position.x += (element.targetDirection.x) * delta * 2;
-			element.position.z += (element.targetDirection.z) * delta * 2;
-			element.position.y = lerp(element.position.y, getNoise(element.position.x, element.position.z) + 0.5, 0.1);
+		} else {
+			if (p < 0.1) {
+				element.scale.setScalar(p * 10);
+			} else if (p > 0.9) {
+				element.scale.setScalar(1 - (p - 0.9) * 10);
+			} else if (element.scale.y < 1) {
+				element.scale.setScalar(1);
+			}
+			if (!element.idle) {
+				element.position.x += (element.targetDirection.x) * delta * 2;
+				element.position.z += (element.targetDirection.z) * delta * 2;
+				element.position.y = lerp(element.position.y, getNoise(element.position.x, element.position.z) + 0.5, 0.1);
+			}
 		}
 	}
 
@@ -111,7 +121,7 @@ import { getNoise } from './stuff/terrain';
 const sceneEmoteArray = [];
 ChatInstance.listen((emotes) => {
 	const group = new THREE.Group();
-	group.lifespan = 20000;
+	group.lifespan = 30000;
 	group.timestamp = Date.now();
 
 	group.targetPosition = new THREE.Vector3(0, 0, 0);
