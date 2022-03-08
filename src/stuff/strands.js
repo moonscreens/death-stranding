@@ -5,7 +5,7 @@ const group = new THREE.Group();
 import generateMaterial from '../materials/strand';
 const mat = generateMaterial();
 const strandHeight = 120;
-const geometry = new THREE.PlaneGeometry(0.5, strandHeight, 3, 256);
+const geometry = new THREE.PlaneGeometry(0.5, strandHeight, 3, 128);
 geometry.translate(0, strandHeight / 2, 0);
 
 const vertices = geometry.getAttribute('position');

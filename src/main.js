@@ -69,6 +69,10 @@ window.addEventListener('DOMContentLoaded', () => {
 /*
 ** Draw loop
 */
+
+function lerp(a, b, t) {
+	return (1 - t) * a + t * b;
+}
 let lastFrame = performance.now();
 function draw() {
 	if (stats) stats.begin();
@@ -80,9 +84,14 @@ function draw() {
 	const d = Date.now();
 	for (let index = sceneEmoteArray.length - 1; index >= 0; index--) {
 		const element = sceneEmoteArray[index];
-		if (element.timestamp + element.lifetime < d) {
+		if (element.timestamp + element.lifespan < d) {
+			element.dead = true;
 			sceneEmoteArray.splice(index, 1);
 			scene.remove(element);
+		} else if (!element.idle) {
+			element.position.x += (element.targetDirection.x) * delta * 2;
+			element.position.z += (element.targetDirection.z) * delta * 2;
+			element.position.y = lerp(element.position.y, getNoise(element.position.x, element.position.z) + 0.5, 0.1);
 		}
 	}
 
@@ -102,8 +111,11 @@ import { getNoise } from './stuff/terrain';
 const sceneEmoteArray = [];
 ChatInstance.listen((emotes) => {
 	const group = new THREE.Group();
-	group.lifespan = 30000;
+	group.lifespan = 20000;
 	group.timestamp = Date.now();
+
+	group.targetPosition = new THREE.Vector3(0, 0, 0);
+	group.idle = true;
 
 	let i = 0;
 	emotes.forEach((emote) => {
@@ -113,10 +125,33 @@ ChatInstance.listen((emotes) => {
 		i++;
 	})
 
-	group.position.set(rand(50), 0, rand(30) + camera.position.z / 2);
+	group.position.set(rand(75), 0, rand(50));
 	group.position.y = getNoise(group.position.x, group.position.z) + 0.5;
 	group.scale.setScalar(1);
+
+	think(group);
 
 	scene.add(group);
 	sceneEmoteArray.push(group);
 });
+
+function think(emote) {
+	if (emote.dead) return;
+	if (!emote.idle) {
+		emote.idle = true;
+		setTimeout(think, Math.random() * 5000, emote);
+		return;
+	}
+
+	if (emote.idle) {
+		emote.idle = false;
+		emote.targetPosition.x = rand(75);
+		emote.targetPosition.z = rand(50);
+
+		emote.targetDirection = new THREE.Vector3().subVectors(emote.targetPosition, emote.position);
+		emote.targetDirection.normalize();
+
+		setTimeout(think, Math.random() * 15000, emote);
+		return
+	}
+}
