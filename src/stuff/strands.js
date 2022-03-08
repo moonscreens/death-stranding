@@ -17,12 +17,17 @@ for (let i = 0; i < vertices.count; i++) {
 }
 
 
-const strandCount = 10;
+const strandCount = 8;
 for (let index = -strandCount / 2; index < strandCount / 2; index++) {
 	const mesh = new THREE.Mesh(geometry, mat);
-	mesh.position.x = index * 20;
+	mesh.position.x = index * 25;
 	mesh.position.y = 4 + Math.random() * 50;
-	mesh.position.z = (Math.pow(Math.random(), 3) - 0.5) * 50;
+	mesh.position.z = (Math.pow(Math.random(), 3) - 0.5) * 30;
+
+	if (index === 1) {
+		mesh.position.z = 15;
+		mesh.position.y = 4;
+	}
 
 	group.add(mesh);
 
