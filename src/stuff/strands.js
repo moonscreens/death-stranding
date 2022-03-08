@@ -18,24 +18,25 @@ for (let i = 0; i < vertices.count; i++) {
 
 
 const strandCount = 8;
+const standoutIndex = 1;
 for (let index = -strandCount / 2; index < strandCount / 2; index++) {
 	const mesh = new THREE.Mesh(geometry, mat);
 	mesh.position.x = index * 25;
 	mesh.position.y = 4 + Math.random() * 50;
 	mesh.position.z = (Math.pow(Math.random(), 3) - 0.5) * 30;
 
-	if (index === 1) {
+	if (index === standoutIndex) {
 		mesh.position.z = 15;
 		mesh.position.y = 4;
 	}
 
 	group.add(mesh);
 
-	const cloneCount = Math.floor(Math.random() * 2) + 2;
+	const cloneCount = index === standoutIndex ? 3 : Math.floor(Math.random() * 2) + 2;
 	for (let i = 0; i < cloneCount; i++) {
 
 		const clone = mesh.clone();
-		clone.position.x += 0.1;
+		clone.position.x += 0.2 * Math.random();
 		clone.position.z -= 0.1 * i;
 		group.add(clone);
 	}
