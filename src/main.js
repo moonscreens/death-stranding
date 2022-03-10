@@ -118,6 +118,9 @@ function draw() {
 function rand(scale) {
 	return (Math.random() - 0.5) * scale * 2;
 }
+function randomPosition() {
+	return new THREE.Vector3(rand(75), 0, rand(farDistance / 2) + camera.position.z - farDistance / 2);
+}
 
 /*
 ** Handle Twitch Chat Emotes
@@ -142,7 +145,7 @@ ChatInstance.listen((emotes) => {
 		i++;
 	})
 
-	group.position.set(rand(75), 0, rand(50) + camera.position.z - farDistance / 2);
+	group.position.copy(randomPosition());
 	group.scale.setScalar(1);
 
 	think(group);
@@ -161,8 +164,7 @@ function think(emote) {
 
 	if (emote.idle) {
 		emote.idle = false;
-		emote.targetPosition.x = rand(75);
-		emote.targetPosition.z = rand(50) + camera.position.z - farDistance / 2;
+		emote.targetPosition.copy(randomPosition());
 
 		emote.targetDirection = new THREE.Vector3().subVectors(emote.targetPosition, emote.position);
 		emote.targetDirection.normalize();
