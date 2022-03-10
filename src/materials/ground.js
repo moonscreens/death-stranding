@@ -2,6 +2,10 @@ import * as THREE from 'three';
 import { palette } from '../palette';
 
 import frag from './ground.frag';
+import vert from './ground.vert';
+
+import snoiseShader from './snoise.glsl';
+import terrainShader from './terrain.glsl';
 
 
 let lastFrame = Date.now();
@@ -32,27 +36,38 @@ material.onBeforeCompile = function (shader) {
 		`
 			varying vec4 vWorldPosition;
 			varying vec3 vNormal;
+			varying float isWater;
+			uniform float u_time;
+			${snoiseShader}
+			${terrainShader}
 			void main()
 		`);
 	shader.vertexShader = shader.vertexShader.replace(
 		'#include <begin_vertex>',
 		`
 			#include <begin_vertex>
-			vWorldPosition = modelMatrix * vec4(position, 1.0);
-
-			vNormal = normal;
 		`);
+	shader.vertexShader = shader.vertexShader.replace(
+		'#include <begin_vertex>',
+		`
+		#include <begin_vertex>
+		${vert}
+	`);
 
 	let fragment = frag.replace(
 		'vec3 grassColor = vec3(0.0, 0.0, 0.0);',
 		`vec3 grassColor = vec3(${palette.grass.r}, ${palette.grass.g}, ${palette.grass.b});`);
+	fragment = fragment.replace(
+		'vec3 waterColor = vec3(0.0, 0.0, 0.0);',
+		`vec3 waterColor = vec3(${palette.water.r}, ${palette.water.g}, ${palette.water.b});`);
 
 	shader.fragmentShader = `
+	varying float isWater;
 	varying vec4 vWorldPosition;
 	varying vec3 vNormal;
 	uniform float u_time;
-	${shader.fragmentShader.replace('#include <map_fragment>', `
-		#include <map_fragment>
+	${shader.fragmentShader.replace('#include <color_fragment>', `
+		#include <color_fragment>
 		${fragment}
 	`)}`;
 };

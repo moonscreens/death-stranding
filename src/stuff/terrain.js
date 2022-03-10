@@ -1,20 +1,16 @@
 import SimplexNoise from 'simplex-noise';
 import * as THREE from 'three';
-import { palette } from '../palette';
 
 const constantNoise = new SimplexNoise('abd');
 const simplex = new SimplexNoise();
 const simplex2 = new SimplexNoise(9876);
-const size = 200;
-const segments = 60;
-const geometry = new THREE.PlaneGeometry(size, size, segments, segments);
-
+const geometry = new THREE.PlaneGeometry(200, 10, 110, 4);
 geometry.rotateX(-Math.PI / 2);
+geometry.translate(0, 0, -geometry.parameters.height / 2);
 
 const difference = (a, b) => {
 	return Math.abs(a - b);
 }
-
 const riverX = 20;
 const riverDeep = 0.35;
 const riverWidth = 15;
@@ -39,40 +35,8 @@ export const getNoise = (x, y) => {
 	);
 }
 
-const vertices = geometry.getAttribute('position');
-for (let i = 0; i < vertices.count; i++) {
-	const vertex = new THREE.Vector3();
-	vertex.fromBufferAttribute(vertices, i);
-	vertex.y = getNoise(vertex.x, vertex.z);
-	vertices.setXYZ(i, vertex.x, vertex.y, vertex.z);
-}
-
-geometry.computeVertexNormals();
-geometry.normalizeNormals();
-
 import groundMaterial from '../materials/ground';
 const mesh = new THREE.Mesh(geometry, groundMaterial);
 mesh.getNoise = getNoise;
-
-import waterMaterial from '../materials/water';
-const waterWidth = 70;
-const waterSegments = 50;
-const waterGeometry = new THREE.PlaneGeometry(waterWidth, size, waterSegments, (size / waterWidth) * waterSegments);
-waterGeometry.rotateX(-Math.PI / 2);
-const water = new THREE.Mesh(waterGeometry, waterMaterial({
-	color: palette.water,
-	flatShading: true,
-	specular: 0xFFFFFF,
-	shininess: 70,
-	transparent: true,
-	opacity: 0.75,
-}));
-water.position.y = -2.25;
-water.position.x = riverX * 1.5;
-mesh.add(water);
-
-water.customDepthMaterial = waterMaterial({
-	depthPacking: THREE.RGBADepthPacking,
-}, true);
 
 export default mesh;

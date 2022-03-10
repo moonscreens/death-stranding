@@ -4,7 +4,7 @@ import * as THREE from "three";
 ** Initiate ThreejS scene
 */
 
-export const farDistance = 120;
+export const farDistance = 130;
 
 export const camera = new THREE.PerspectiveCamera(
 	70,

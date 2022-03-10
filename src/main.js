@@ -105,6 +105,12 @@ function draw() {
 		}
 	}
 
+	camera.position.z -= delta * 5;
+
+	for (let index = 0; index < drawFunctions.length; index++) {
+		drawFunctions[index](delta);
+	}
+
 	renderer.render(scene, camera);
 	if (stats) stats.end();
 };
@@ -135,7 +141,7 @@ ChatInstance.listen((emotes) => {
 		i++;
 	})
 
-	group.position.set(rand(75), 0, rand(50));
+	group.position.set(rand(75), 0, rand(50) + camera.position.z - farDistance / 2);
 	group.position.y = getNoise(group.position.x, group.position.z) + 0.5;
 	group.scale.setScalar(1);
 
@@ -156,7 +162,7 @@ function think(emote) {
 	if (emote.idle) {
 		emote.idle = false;
 		emote.targetPosition.x = rand(75);
-		emote.targetPosition.z = rand(50);
+		emote.targetPosition.z = rand(50) + camera.position.z - farDistance / 2;
 
 		emote.targetDirection = new THREE.Vector3().subVectors(emote.targetPosition, emote.position);
 		emote.targetDirection.normalize();

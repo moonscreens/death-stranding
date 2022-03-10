@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { farDistance, scene, renderer } from "./scene";
+import { farDistance, scene, drawFunctions, camera } from "./scene";
 
 import { palette } from "./palette";
 
@@ -18,17 +18,29 @@ light.color = light.color.clone().sub(palette.black);
 light.position.set(0, 1, -0.5);
 scene.add(light);
 
-scene.add(terrain);
 scene.add(strands);
 
-const backPlane = new THREE.Mesh(
-	new THREE.PlaneBufferGeometry(farDistance * 2, farDistance * 2),
-	new THREE.MeshBasicMaterial({
-		color: palette.fog,
-	})
-);
-backPlane.position.z = -farDistance;
-scene.add(backPlane);
+const groundMeshes = [];
+for (let index = 0; index < farDistance * 2; index += terrain.geometry.parameters.height) {
+	const mesh = terrain.clone();
+	mesh.position.z = index;
+	groundMeshes.push(mesh);
+	scene.add(mesh);
+}
+drawFunctions.push((delta) => {
+	for (let index = 0; index < groundMeshes.length; index++) {
+		const element = groundMeshes[index];
+		while (element.position.z > camera.position.z) {
+			element.position.z -= farDistance * 2;
+		}
+	}
 
-const generator = new THREE.PMREMGenerator(renderer);
-scene.environment = generator.fromScene(scene).texture;
+	for (let index = 0; index < strands.children.length; index++) {
+		const element = strands.children[index];
+		while (element.position.z > camera.position.z) {
+			element.position.z -= farDistance;
+			element.position.y = Math.random() * 50;
+			element.position.x = (Math.random() * 2 - 1) * 100;
+		}
+	}
+})
