@@ -3,6 +3,7 @@ import TwitchChat from 'twitch-chat-emotes-threejs';
 import Stats from 'stats-js';
 
 import { scene, camera, renderer, farDistance, drawFunctions } from './scene';
+import initEmoteMaterial from './materials/emotes';
 import './main.css';
 import './environment';
 
@@ -36,12 +37,14 @@ const ChatInstance = new TwitchChat({
 	THREE,
 
 	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
-	materialType: THREE.SpriteMaterial,
+	materialType: THREE.MeshBasicMaterial,
 
 	// Passed to material options
 	materialOptions: {
 		transparent: true,
 	},
+
+	materialHook: initEmoteMaterial,
 
 	channels,
 	maximumEmoteLimit: 3,
@@ -70,9 +73,6 @@ window.addEventListener('DOMContentLoaded', () => {
 ** Draw loop
 */
 
-function lerp(a, b, t) {
-	return (1 - t) * a + t * b;
-}
 let lastFrame = performance.now();
 function draw() {
 	if (stats) stats.begin();
@@ -100,7 +100,6 @@ function draw() {
 			if (!element.idle) {
 				element.position.x += (element.targetDirection.x) * delta * 2;
 				element.position.z += (element.targetDirection.z) * delta * 2;
-				element.position.y = lerp(element.position.y, getNoise(element.position.x, element.position.z) + 0.5, 0.1);
 			}
 		}
 	}
@@ -123,8 +122,10 @@ function rand(scale) {
 /*
 ** Handle Twitch Chat Emotes
 */
-import { getNoise } from './stuff/terrain';
 const sceneEmoteArray = [];
+const emoteGeometry = new THREE.PlaneGeometry(1, 1);
+emoteGeometry.translate(0, 0.5 + 10, 0);
+
 ChatInstance.listen((emotes) => {
 	const group = new THREE.Group();
 	group.lifespan = 30000;
@@ -135,14 +136,13 @@ ChatInstance.listen((emotes) => {
 
 	let i = 0;
 	emotes.forEach((emote) => {
-		const sprite = new THREE.Sprite(emote.material);
+		const sprite = new THREE.Mesh(emoteGeometry,emote.material);
 		sprite.position.x = i;
 		group.add(sprite);
 		i++;
 	})
 
 	group.position.set(rand(75), 0, rand(50) + camera.position.z - farDistance / 2);
-	group.position.y = getNoise(group.position.x, group.position.z) + 0.5;
 	group.scale.setScalar(1);
 
 	think(group);

@@ -2576,10 +2576,10 @@ tslib@^2.0.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
 
-twitch-chat-emotes-threejs@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/twitch-chat-emotes-threejs/-/twitch-chat-emotes-threejs-0.3.0.tgz#f310bc6778f7b5cb4f43bdbdb515e42799f8ec6d"
-  integrity sha512-R2ulrRomDIslMhxQGo2NcO9PCmnGofGSwfkmR0wsnthyteYYfh72S+LvjglfjBHj2CktsqwfQh7teYSDMVRLWQ==
+twitch-chat-emotes-threejs@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/twitch-chat-emotes-threejs/-/twitch-chat-emotes-threejs-0.3.1.tgz#c711ccf7087131a0cc848d535a820cc43e17ec31"
+  integrity sha512-q5H6KH27lVbOAhY4fij36lIziTxDKtOYnxQwbJExcbTCQvt3d+95IVutXVW1rME9g670JD+4GxI1gfE3HznWsQ==
   dependencies:
     twitch-chat-emotes "^0.2.2"
 
