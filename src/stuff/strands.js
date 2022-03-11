@@ -3,7 +3,7 @@ import * as THREE from 'three';
 const group = new THREE.Group();
 
 import generateMaterial from '../materials/strand';
-import { farDistance } from '../scene';
+import { camera, farDistance } from '../scene';
 const mat = generateMaterial();
 const strandHeight = 120;
 const geometry = new THREE.PlaneGeometry(0.5, strandHeight, 3, 128);
@@ -24,7 +24,7 @@ for (let index = -strandCount / 2; index < strandCount / 2; index++) {
 	const mesh = new THREE.Mesh(geometry, mat);
 	mesh.position.x = index * 50;
 	mesh.position.y = Math.random() * 50;
-	mesh.position.z = (index + strandCount / 2) * (farDistance / strandCount);
+	mesh.position.z = (index + strandCount / 2) * (farDistance / strandCount) + camera.position.z;
 
 	if (index === standoutIndex) {
 		mesh.position.z = 15;
