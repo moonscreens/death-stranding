@@ -104,7 +104,7 @@ function draw() {
 		}
 	}
 
-	camera.position.z -= delta * 5;
+	camera.position.z -= delta * 2;
 
 	for (let index = 0; index < drawFunctions.length; index++) {
 		drawFunctions[index](delta);

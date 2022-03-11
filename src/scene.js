@@ -14,7 +14,7 @@ export const camera = new THREE.PerspectiveCamera(
 );
 camera.rotation.x = Math.PI * 0.1;
 camera.position.y = 5;
-camera.position.z = farDistance / 2;
+camera.position.z = Math.random() * 10000;
 
 export const scene = new THREE.Scene();
 export const renderer = new THREE.WebGLRenderer({ antialias: true });

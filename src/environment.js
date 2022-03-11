@@ -23,7 +23,7 @@ scene.add(strands);
 const groundMeshes = [];
 for (let index = 0; index < farDistance * 2; index += terrain.geometry.parameters.height) {
 	const mesh = terrain.clone();
-	mesh.position.z = index;
+	mesh.position.z = index + camera.position.z;
 	groundMeshes.push(mesh);
 	scene.add(mesh);
 }
