@@ -6,16 +6,8 @@ transformed.y += getTerrainNoise(vWorldPosition.x, vWorldPosition.z);
 vWorldPosition.y += transformed.y;
 vNormal = normal;
 
-float offset = vWorldPosition.y;
-if (vWorldPosition.y < 0.0) {
-	isWater = -vWorldPosition.y;
-	if (vWorldPosition.y < 0.0) {
-		offset = snoise(vec3(vWorldPosition.x, vWorldPosition.z, u_time * 0.25)) - 1.0;
-	} else {
-		offset = 0.0;
-	}
-} else {
-	isWater = 0.0;
+isWater = getRiver(vWorldPosition.x, vWorldPosition.z, false);
+
+if (isWater > 0.0) {
+	transformed.y += snoise(vec3(vWorldPosition.x, vWorldPosition.z - u_time * 0.15, u_time * 0.15)) * 0.5 * pow(isWater, 2.0);
 }
-transformed.y = offset;
-vWorldPosition.y += offset;
