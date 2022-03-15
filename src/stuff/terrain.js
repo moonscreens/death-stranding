@@ -4,7 +4,7 @@ import * as THREE from 'three';
 const constantNoise = new SimplexNoise('abd');
 const simplex = new SimplexNoise();
 const simplex2 = new SimplexNoise(9876);
-const geometry = new THREE.PlaneGeometry(200, 10, 110, 4);
+const geometry = new THREE.PlaneGeometry(200, 10, Math.round(110 * 1.25), Math.round(4 * 1.25));
 geometry.rotateX(-Math.PI / 2);
 geometry.translate(0, 0, geometry.parameters.height / 2);
 
