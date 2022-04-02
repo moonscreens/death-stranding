@@ -32,9 +32,11 @@ for (let index = 0; index < farDistance * 2; index += terrain.geometry.parameter
 	mesh.position.z = index + camera.position.z;
 	groundMeshes.push(mesh);
 
-	const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
-	skyMesh.position.y = 60;
-	mesh.add(skyMesh);
+	for (let index = 0; index < 10; index++) {
+		const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+		skyMesh.position.y = 45 + index / 2;
+		mesh.add(skyMesh);
+	}
 
 	scene.add(mesh);
 }

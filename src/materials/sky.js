@@ -20,6 +20,8 @@ let uniforms = null;
 const skyMaterial = new THREE.MeshBasicMaterial({
 	color: 0xFFFFFF,
 	side: THREE.BackSide,
+	transparent: true,
+	opacity: 0.1,
 });
 skyMaterial.needsUpdate = true;
 skyMaterial.onBeforeCompile = function (shader) {
