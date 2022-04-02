@@ -21,7 +21,7 @@ const skyMaterial = new THREE.MeshBasicMaterial({
 	color: 0xFFFFFF,
 	side: THREE.BackSide,
 	transparent: true,
-	opacity: 0.1,
+	opacity: 0.125,
 });
 skyMaterial.needsUpdate = true;
 skyMaterial.onBeforeCompile = function (shader) {
