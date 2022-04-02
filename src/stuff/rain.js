@@ -1,12 +1,11 @@
 import * as THREE from 'three';
 import { drawFunctions, camera, farDistance } from '../scene';
 
-const drops = new Array(2000);
+const drops = new Array(0);
 
 const rainGeometry = new THREE.PlaneBufferGeometry(0.05, 1);
 const rainMaterial = new THREE.MeshBasicMaterial({
-	color: 0xaaaaaa,
-	blending: THREE.MultiplyBlending,
+	color: 0x0066CC,
 	transparent: true,
 	opacity: 0.5,
 	side: THREE.DoubleSide,
