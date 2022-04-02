@@ -5,10 +5,12 @@ import { palette } from "./palette";
 
 import terrain from "./stuff/terrain";
 import strands from "./stuff/strands";
+import skyMaterial from "./materials/sky";
+import RainGroup from './stuff/rain';
 
 scene.background = palette.fog;
 
-scene.fog = new THREE.Fog(palette.fog, -farDistance * 0.1, farDistance);
+scene.fog = new THREE.Fog(palette.fog, -farDistance * 0.05, farDistance);
 //scene.fog = new THREE.FogExp2(palette.fog, 0.025);
 
 scene.add(new THREE.AmbientLight(palette.black));
@@ -19,12 +21,30 @@ light.position.set(0, 1, -0.5);
 scene.add(light);
 
 scene.add(strands);
+scene.add(RainGroup);
 
 const groundMeshes = [];
+console.log(terrain.geometry)
+const skyGeometry = new THREE.PlaneBufferGeometry(
+	terrain.geometry.parameters.width * 1.5,
+	terrain.geometry.parameters.height,
+	Math.round(terrain.geometry.parameters.widthSegments / 5),
+	Math.max(2, Math.round(terrain.geometry.parameters.heightSegments / 2))
+);
+skyGeometry.rotateX(-Math.PI / 2);
+skyGeometry.translate(0, 0, skyGeometry.parameters.height / 2);
+
 for (let index = 0; index < farDistance * 2; index += terrain.geometry.parameters.height) {
 	const mesh = terrain.clone();
 	mesh.position.z = index + camera.position.z;
 	groundMeshes.push(mesh);
+
+	for (let index = 0; index < 10; index++) {
+		const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+		skyMesh.position.y = 35 + index * 0.5;
+		mesh.add(skyMesh);
+	}
+
 	scene.add(mesh);
 }
 drawFunctions.push((delta) => {
