@@ -5,6 +5,7 @@ import { palette } from "./palette";
 
 import terrain from "./stuff/terrain";
 import strands from "./stuff/strands";
+import skyMaterial from "./materials/sky";
 
 scene.background = palette.fog;
 
@@ -21,10 +22,20 @@ scene.add(light);
 scene.add(strands);
 
 const groundMeshes = [];
+console.log(terrain.geometry)
+const skyGeometry = new THREE.PlaneBufferGeometry(terrain.geometry.parameters.width, terrain.geometry.parameters.height, Math.round(terrain.geometry.parameters.widthSegments / 10), Math.round(terrain.geometry.parameters.heightSegments / 2));
+skyGeometry.rotateX(-Math.PI / 2);
+skyGeometry.translate(0, 0, skyGeometry.parameters.height / 2);
+
 for (let index = 0; index < farDistance * 2; index += terrain.geometry.parameters.height) {
 	const mesh = terrain.clone();
 	mesh.position.z = index + camera.position.z;
 	groundMeshes.push(mesh);
+
+	const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
+	skyMesh.position.y = 60;
+	mesh.add(skyMesh);
+
 	scene.add(mesh);
 }
 drawFunctions.push((delta) => {
