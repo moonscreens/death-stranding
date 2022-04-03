@@ -6,7 +6,7 @@ import { palette } from "./palette";
 import terrain from "./stuff/terrain";
 import strands from "./stuff/strands";
 import skyMaterial from "./materials/sky";
-import RainGroup from './stuff/rain';
+import RainMesh from './stuff/rain';
 
 scene.background = palette.fog;
 
@@ -21,10 +21,9 @@ light.position.set(0, 1, -0.5);
 scene.add(light);
 
 scene.add(strands);
-scene.add(RainGroup);
+scene.add(RainMesh);
 
 const groundMeshes = [];
-console.log(terrain.geometry)
 const skyGeometry = new THREE.PlaneBufferGeometry(
 	terrain.geometry.parameters.width * 1.5,
 	terrain.geometry.parameters.height,
