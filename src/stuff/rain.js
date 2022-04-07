@@ -7,9 +7,9 @@ const maxY = farDistance * 0.25;
 const rainGeometry = new THREE.IcosahedronBufferGeometry(0.015, 1);
 rainGeometry.scale(1, 15, 1);
 const rainMaterial = new THREE.MeshBasicMaterial({
-	color: 0x0033AA,
+	color: 0x7794D8,
 	transparent: true,
-	opacity: 0.2,
+	opacity: 0.5,
 });
 
 const RainMesh = new THREE.InstancedMesh(rainGeometry, rainMaterial, count);
