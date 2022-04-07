@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import { drawFunctions, camera, farDistance } from '../scene';
 
-const count = 2000;
+const count = 7000;
 const maxY = farDistance * 0.25;
 
-const rainGeometry = new THREE.BoxBufferGeometry(0.05, 0.4, 0.05);
+const rainGeometry = new THREE.IcosahedronBufferGeometry(0.015, 1);
+rainGeometry.scale(1, 15, 1);
 const rainMaterial = new THREE.MeshBasicMaterial({
 	color: 0x0033AA,
 	transparent: true,
@@ -21,7 +22,7 @@ function getX() {
 	return (Math.random() * 2 - 1) * farDistance;
 }
 function getZ() {
-	return (camera.position.z - farDistance * 0.05) - (farDistance * 1.25 * Math.random());
+	return (camera.position.z - farDistance * 0.075) - (farDistance * 1.25 * Math.random());
 }
 
 for (let index = 0; index < count; index++) {
