@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { palette } from '../palette';
 
-import vert from './sky.vert';
+import vert from './cloud.vert';
 
 import snoiseShader from './snoise.glsl';
 
@@ -17,19 +17,19 @@ const tick = () => {
 }
 let uniforms = null;
 
-const skyMaterial = new THREE.MeshBasicMaterial({
-	color: 0xFFFFFF,
+const cloudMaterial = new THREE.MeshBasicMaterial({
+	color: palette.cloud,
 	side: THREE.BackSide,
 	transparent: true,
 	opacity: 0.125,
 });
-skyMaterial.needsUpdate = true;
-skyMaterial.onBeforeCompile = function (shader) {
+cloudMaterial.needsUpdate = true;
+cloudMaterial.onBeforeCompile = function (shader) {
 	shader.uniforms.u_time = { value: Math.random() * 1000 };
 	uniforms = shader.uniforms;
 	tick();
 
-	skyMaterial.userData.shader = shader;
+	cloudMaterial.userData.shader = shader;
 
 	shader.vertexShader = shader.vertexShader.replace(
 		'void main()',
@@ -47,9 +47,9 @@ skyMaterial.onBeforeCompile = function (shader) {
 };
 
 // Make sure WebGLRenderer doesn't reuse a single program
-skyMaterial.customProgramCacheKey = function () {
+cloudMaterial.customProgramCacheKey = function () {
 	return parseInt(window.shaderPID++); // some random ish number
 };
 
 
-export default skyMaterial
+export default cloudMaterial

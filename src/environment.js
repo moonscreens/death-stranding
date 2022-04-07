@@ -5,7 +5,7 @@ import { palette } from "./palette";
 
 import terrain from "./stuff/terrain";
 import strands from "./stuff/strands";
-import skyMaterial from "./materials/sky";
+import cloudMaterial from "./materials/cloud";
 import RainMesh from './stuff/rain';
 
 scene.background = palette.fog;
@@ -24,14 +24,14 @@ scene.add(strands);
 scene.add(RainMesh);
 
 const groundMeshes = [];
-const skyGeometry = new THREE.PlaneBufferGeometry(
+const cloudGeometry = new THREE.PlaneBufferGeometry(
 	terrain.geometry.parameters.width * 1.5,
 	terrain.geometry.parameters.height,
 	Math.round(terrain.geometry.parameters.widthSegments / 5),
 	Math.max(2, Math.round(terrain.geometry.parameters.heightSegments / 2))
 );
-skyGeometry.rotateX(-Math.PI / 2);
-skyGeometry.translate(0, 0, skyGeometry.parameters.height / 2);
+cloudGeometry.rotateX(-Math.PI / 2);
+cloudGeometry.translate(0, 0, cloudGeometry.parameters.height / 2);
 
 for (let index = 0; index < farDistance * 2; index += terrain.geometry.parameters.height) {
 	const mesh = terrain.clone();
@@ -39,9 +39,9 @@ for (let index = 0; index < farDistance * 2; index += terrain.geometry.parameter
 	groundMeshes.push(mesh);
 
 	for (let index = 0; index < 10; index++) {
-		const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial);
-		skyMesh.position.y = 35 + index * 0.5;
-		mesh.add(skyMesh);
+		const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+		cloudMesh.position.y = 35 + index * 0.5;
+		mesh.add(cloudMesh);
 	}
 
 	scene.add(mesh);

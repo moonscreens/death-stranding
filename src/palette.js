@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 export const palette = {
-	fog: new THREE.Color("#CCCCCC"),
+	fog: new THREE.Color('#FFFFFF'),
+	cloud: new THREE.Color("#CCCCCC"),
 	grass: new THREE.Color("#87AE74"),
 	water: new THREE.Color("#779BE2"),
 	stone: new THREE.Color("#505168"),
