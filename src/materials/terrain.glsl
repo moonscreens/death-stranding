@@ -25,9 +25,11 @@ float getRiver(float x, float y, float width) {
 }
 
 float getTerrainNoise(float x, float y) {
+
+	float flattenDistance = cameraFlattenDistance * (1.0 + noise1(0.0, y * 0.01) * 2.0);
 	float riverIntensity = getRiver(x, y, 1.0);
 	return (// mountains
-	((noise1(x * 0.0014, y * 0.0014) * 20.0 + noise1(x * 0.0007 + 50.0, y * 0.0007 + 50.0) * 20.0) * (1.0 - getRiver(x, y, 7.0))) * min(abs(x / cameraFlattenDistance), 1.0) +
+	((noise1(x * 0.0014, y * 0.0014) * 20.0 + noise1(x * 0.0007 + 50.0, y * 0.0007 + 50.0) * 20.0) * (1.0 - getRiver(x, y, 7.0))) * min(abs(x / flattenDistance), 1.0) +
 		((noise1(x * 0.01, y * 0.01)) * 15.0 * max(0.0, min(1.0, pow((difference(x, 0.0) / 30.0), 2.0)))) * (1.0 - getRiver(x, y, 4.0)) +
 			// usual ground noise
 		noise2(x * 0.1, y * 0.1) * 2.0 * (noise3(x * 0.01, y * 0.01) * 0.5 + 0.5) +
