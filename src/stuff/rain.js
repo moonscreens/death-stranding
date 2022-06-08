@@ -1,15 +1,13 @@
 import * as THREE from 'three';
 import { drawFunctions, camera, farDistance } from '../scene';
 
-const count = 7000;
+const count = 1000;
 const maxY = farDistance * 0.25;
 
 const rainGeometry = new THREE.IcosahedronBufferGeometry(0.015, 1);
-rainGeometry.scale(1, 15, 1);
+rainGeometry.scale(2, 20, 2);
 const rainMaterial = new THREE.MeshBasicMaterial({
 	color: 0x7794D8,
-	transparent: true,
-	opacity: 0.5,
 });
 
 const RainMesh = new THREE.InstancedMesh(rainGeometry, rainMaterial, count);
